@@ -1,0 +1,2609 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Toub.Sound.Midi</name>
+    </assembly>
+    <members>
+        <member name="T:Toub.Sound.Midi.MidiCodeGenerator">
+            <summary>Generator to render code to generate a given MIDI file.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiCodeGenerator.#ctor">
+            <summary>Prevent external instantiation.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiCodeGenerator.GenerateMIDICode(System.CodeDom.Compiler.ICodeGenerator,Toub.Sound.Midi.MidiSequence,System.String,System.IO.TextWriter)">
+            <summary>Creates code from a MIDI sequence.</summary>
+            <param name="generator">Generator used to generate the actual code.</param>
+            <param name="sequence">The sequence to translate.</param>
+            <param name="midiName">The name of the MIDI sequence to be used as the class name.</param>
+            <param name="writer">The writer to which the text is written.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiCodeGenerator.CreateSequenceMethod(Toub.Sound.Midi.MidiSequence)">
+            <summary>Creates the code for the sequence.</summary>
+            <param name="sequence">The sequence for which we want code.</param>
+            <returns>The method that creates the sequence.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiCodeGenerator.CreateTrackMethod(System.String,Toub.Sound.Midi.MidiTrack)">
+            <summary>Creates a method to create the track.</summary>
+            <param name="name">The name of the track method.</param>
+            <param name="track">The track to translate.</param>
+            <returns>The method that creates the track.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiCodeGenerator.CreateEvent(Toub.Sound.Midi.MidiEvent)">
+            <summary>Creates an object creation expression for an event.</summary>
+            <param name="ev">The event to create.</param>
+            <returns>The object creation expression for the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiCodeGenerator.CreateMetaEvent(Toub.Sound.Midi.MidiEvent)">
+            <summary>Creates an object creation expression for an event.</summary>
+            <param name="ev">The event to create.</param>
+            <returns>The object creation expression for the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiCodeGenerator.CreateSystemEvent(Toub.Sound.Midi.MidiEvent)">
+            <summary>Creates an object creation expression for an event.</summary>
+            <param name="ev">The event to create.</param>
+            <returns>The object creation expression for the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiCodeGenerator.CreateVoiceEvent(Toub.Sound.Midi.MidiEvent)">
+            <summary>Creates an object creation expression for an event.</summary>
+            <param name="ev">The event to create.</param>
+            <returns>The object creation expression for the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiCodeGenerator.CreateDataArray(System.Byte[])">
+            <summary>Creates a code expression that creates a byte array of data.</summary>
+            <param name="data">The data to translate.</param>
+            <returns>The code expression representing the array.</returns>
+        </member>
+        <member name="T:Toub.Sound.Midi.SpecialChannels">
+            <summary>Defines channels reserved for special purposes.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.SpecialChannels.Percussion">
+            <summary>General MIDI percussion channel</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.GeneralMidiInstruments">
+            <summary>General MIDI Instrument Patch Map.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.AcousticGrand">
+            <summary>Acoustic Grand</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.BrightAcoustic">
+            <summary>Bright Acoustic</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.ElectricGrand">
+            <summary>Electric Grand</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.HonkyTonk">
+            <summary>Honky Tonk</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.ElectricPiano1">
+            <summary>Electric Piano 1</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.ElectricPiano2">
+            <summary>Electric Piano 2</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Harpsichord">
+            <summary>Harpsichord</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Clav">
+            <summary>Clav</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Celesta">
+            <summary>Celesta</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Glockenspiel">
+            <summary>Glockenspiel</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.MusicBox">
+            <summary>Music Box</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Vibraphone">
+            <summary>Vibraphone</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Marimba">
+            <summary>Marimba</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Xylophone">
+            <summary>Xylophone</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.TubularBells">
+            <summary>Tubular Bells</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Dulcimer">
+            <summary>Dulcimer</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.DrawbarOrgan">
+            <summary>Drawbar Organ</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.PercussiveOrgan">
+            <summary>Percussive Organ</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.RockOrgan">
+            <summary>Rock Organ</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.ChurchOrgan">
+            <summary>Church Organ</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.ReedOrgan">
+            <summary>Reed Organ</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Accoridan">
+            <summary>Accoridan</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Harmonica">
+            <summary>Harmonica</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.TangoAccordian">
+            <summary>Tango Accordian</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.NylonAcousticGuitar">
+            <summary>Nylon Acoustic Guitar</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SteelAcousticGuitar">
+            <summary>Steel Acoustic Guitar</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.JazzElectricGuitar">
+            <summary>Jazz Electric Guitar</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.CleanElectricGuitar">
+            <summary>Clean Electric Guitar</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.MutedElectricGuitar">
+            <summary>Muted Electric Guitar</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.OverdrivenGuitar">
+            <summary>Overdriven Guitar</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.DistortionGuitar">
+            <summary>Distortion Guitar</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.GuitarHarmonics">
+            <summary>Guitar Harmonics</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.AcousticBass">
+            <summary>Acoustic Bass</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.FingerElectricBass">
+            <summary>Finger Electric Bass</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.PickElectricBass">
+            <summary>Pick Electric Bass</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.FretlessBass">
+            <summary>Fretless Bass</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SlapBass1">
+            <summary>Slap Bass 1</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SlapBass2">
+            <summary>Slap Bass 2</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SynthBass1">
+            <summary>Synth Bass 1</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SynthBass2">
+            <summary>Synth Bass 2</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Violin">
+            <summary>Violin</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Viola">
+            <summary>Viola</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Cello">
+            <summary>Cello</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Contrabass">
+            <summary>Contrabass</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.TremoloStrings">
+            <summary>Tremolo Strings</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.PizzicatoStrings">
+            <summary>Pizzicato Strings</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.OrchestralStrings">
+            <summary>Orchestral Strings</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Timpani">
+            <summary>Timpani</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.StringEnsemble1">
+            <summary>String Ensemble 1</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.StringEnsemble2">
+            <summary>String Ensemble 2</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SynthStrings1">
+            <summary>Synth Strings 1</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SynthStrings2">
+            <summary>Synth Strings 2</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.ChoirAahs">
+            <summary>Choir Aahs</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.VoiceOohs">
+            <summary>Voice Oohs</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SynthVoice">
+            <summary>Synth Voice</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.OrchestraHit">
+            <summary>Orchestra Hit</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Trumpet">
+            <summary>Trumpet</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Trombone">
+            <summary>Trombone</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Tuba">
+            <summary>Tuba</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.MutedTrumpet">
+            <summary>Muted Trumpet</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.FrenchHorn">
+            <summary>French Horn</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.BrassSection">
+            <summary>Brass Section</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SynthBrass1">
+            <summary>Synth Brass 1</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SynthBrass2">
+            <summary>Synth Brass 2</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SopranoSax">
+            <summary>Soprano Sax</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.AltoSax">
+            <summary>Alto Sax</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.TenorSax">
+            <summary>Tenor Sax</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.BaritoneSax">
+            <summary>Baritone Sax</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Oboe">
+            <summary>Oboe</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.EnglishHorn">
+            <summary>English Horn</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Bassoon">
+            <summary>Bassoon</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Clarinet">
+            <summary>Clarinet</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Piccolo">
+            <summary>Piccolo</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Flute">
+            <summary>Flute</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Recorder">
+            <summary>Recorder</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.PanFlute">
+            <summary>Pan Flute</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.BlownBottle">
+            <summary>Blown Bottle</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Skakuhachi">
+            <summary>Skakuhachi</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Whistle">
+            <summary>Whistle</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Ocarina">
+            <summary>Ocarina</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SquareLead">
+            <summary>Square Lead</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SawtoothLead">
+            <summary>Sawtooth Lead</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.CalliopeLead">
+            <summary>Calliope Lead</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.ChiffLead">
+            <summary>Chiff Lead</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.CharangLead">
+            <summary>Charang Lead</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.VoiceLead">
+            <summary>Voice Lead</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.FifthsLead">
+            <summary>Fifths Lead</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.BaseLead">
+            <summary>Base Lead</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.NewAgePad">
+            <summary>NewAge Pad</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.WarmPad">
+            <summary>Warm Pad</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.PolysynthPad">
+            <summary>Polysynth Pad</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.ChoirPad">
+            <summary>Choir Pad</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.BowedPad">
+            <summary>Bowed Pad</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.MetallicPad">
+            <summary>Metallic Pad</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.HaloPad">
+            <summary>Halo Pad</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SweepPad">
+            <summary>Sweep Pad</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Rain">
+            <summary>Rain</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Soundtrack">
+            <summary>Soundtrack</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Crystal">
+            <summary>Crystal</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Atmosphere">
+            <summary>Atmosphere</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Brightness">
+            <summary>Brightness</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Goblin">
+            <summary>Goblin</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Echos">
+            <summary>Echos</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SciFi">
+            <summary>SciFi</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Sitar">
+            <summary>Sitar</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Banjo">
+            <summary>Banjo</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Shamisen">
+            <summary>Shamisen</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Koto">
+            <summary>Koto</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Kalimba">
+            <summary>Kalimba</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Bagpipe">
+            <summary>Bagpipe</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Fiddle">
+            <summary>Fiddle</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Shanai">
+            <summary>Shanai</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.TinkleBell">
+            <summary>Tinkle Bell</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Agogo">
+            <summary>Agogo</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SteelDrums">
+            <summary>Steel Drums</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Woodblock">
+            <summary>Woodblock</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.TaikoDrum">
+            <summary>TaikoD rum</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.MelodicTom">
+            <summary>Melodic Tom</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.SynthDrum">
+            <summary>Synth Drum</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.ReverseCymbal">
+            <summary>Reverse Cymbal</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.GuitarFretNoise">
+            <summary>Guitar Fret Noise</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.BreathNoise">
+            <summary>Breath Noise</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Seashore">
+            <summary>Seashore</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.BirdTweet">
+            <summary>Bird Tweet</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.TelephoneRing">
+            <summary>Telephone Ring</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Helicopter">
+            <summary>Helicopter</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Applause">
+            <summary>Applause</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiInstruments.Gunshot">
+            <summary>Gunshot</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.GeneralMidiPercussion">
+            <summary>General MIDI Percussion Patch Map.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.BassDrum">
+            <summary>Bass Drum</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.BassDrum1">
+            <summary>Bass Drum 1</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.SideStick">
+            <summary>Side Stick</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.AcousticSnare">
+            <summary>Acoustic Snare</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.HandClap">
+            <summary>Hand Clap</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.ElectricSnare">
+            <summary>Electric Snare</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.LowFloorTom">
+            <summary>Low Floor Tom</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.ClosedHiHat">
+            <summary>Closed Hi Hat</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.HighFloorTom">
+            <summary>High Floor Tom</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.PedalHiHat">
+            <summary>Pedal Hi Hat</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.LowTom">
+            <summary>Low Tom</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.OpenHiHat">
+            <summary>Open Hi Hat</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.LowMidTom">
+            <summary>Low Mid Tom</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.HiMidTom">
+            <summary>Hi Mid Tom</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.CrashCymbal1">
+            <summary>Crash Cymbal 1</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.HighTom">
+            <summary>High Tom</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.RideCymbal">
+            <summary>Ride Cymbal</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.ChineseCymbal">
+            <summary>Chinese Cymbal</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.RideBell">
+            <summary>Ride Bell</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.Tambourine">
+            <summary>Tambourine</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.SplashCymbal">
+            <summary>Splash Cymbal</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.Cowbell">
+            <summary>Cowbell</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.CrashCymbal2">
+            <summary>Crash Cymbal 2</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.Vibraslap">
+            <summary>Vibraslap</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.RideCymbal2">
+            <summary>Ride Cymbal 2</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.HiBongo">
+            <summary>Hi Bongo</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.LowBongo">
+            <summary>Low Bongo</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.MuteHiConga">
+            <summary>Mute Hi Conga</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.OpenHiConga">
+            <summary>Open Hi Conga</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.LowConga">
+            <summary>Low Conga</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.HighTimbale">
+            <summary>High Timbale</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.LowTimbale">
+            <summary>Low Timbale</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.HighAgogo">
+            <summary>High Agogo</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.LowAgogo">
+            <summary>Low Agogo</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.Cabasa">
+            <summary>Cabasa</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.Maracas">
+            <summary>Maracas</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.ShortWhistle">
+            <summary>Short Whistle</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.LongWhistle">
+            <summary>Long Whistle</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.ShortGuiro">
+            <summary>Short Guiro</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.LongGuiro">
+            <summary>Long Guiro</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.Claves">
+            <summary>Claves</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.HiWoodBlock">
+            <summary>Hi Wood Block</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.LowWoodBlock">
+            <summary>Low Wood Block</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.MuteCuica">
+            <summary>Mute Cuica</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.OpenCuica">
+            <summary>Open Cuica</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.MuteTriangle">
+            <summary>Mute Triangle</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.GeneralMidiPercussion.OpenTriangle">
+            <summary>Open Triangle</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.ManufacturerID">
+            <summary>IDs of MIDI-related manufacturers.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.SequentialCircuits">
+            <summary>Sequential Circuits</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.BigBriar">
+            <summary>Big Briar</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Octave">
+            <summary>Octave</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Moog">
+            <summary>Moog</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.PassportDesigns">
+            <summary>Passport Designs</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Lexicon">
+            <summary>Lexicon</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Kurzweil">
+            <summary>Kurzweil</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Fender">
+            <summary>Fender</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Gulbransen">
+            <summary>Gulbransen</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.DeltaLabs">
+            <summary>DeltaLabs</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.SoundComp">
+            <summary>SoundComp</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.GeneralElectro">
+            <summary>General Electro</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Techmar">
+            <summary>Techmar</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.MatthewsResearch">
+            <summary>Matthews Research</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Oberheim">
+            <summary>Oberheim</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.PAIA">
+            <summary>PAIA</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Simmons">
+            <summary>Simmons</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.DigiDesign">
+            <summary>DigiDesign</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Fairlight">
+            <summary>Fairlight</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Peavey">
+            <summary>Peavey</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.JLCooper">
+            <summary>J.L. Cooper</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Lowery">
+            <summary>Lowery</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Lin">
+            <summary>Lin</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Emu">
+            <summary>Emu</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.BonTempi">
+            <summary>Bon Tempi</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.SIEL">
+            <summary>SIEL</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.SyntheAxe">
+            <summary>Synthe Axe</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Hohner">
+            <summary>Hohner</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Crumar">
+            <summary>Crumar</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Solton">
+            <summary>Solton</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.JellinghausMs">
+            <summary>Jellinghaus Ms</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.CTS">
+            <summary>CTS</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.PPG">
+            <summary>PPG</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Elka">
+            <summary>Elka</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Cheetah">
+            <summary>Cheetah</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Waldorf">
+            <summary>Waldorf</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Kawai">
+            <summary>Kawai</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Roland">
+            <summary>Roland</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Korg">
+            <summary>Korg</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Yamaha">
+            <summary>Yamaha</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Casio">
+            <summary>Casio</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.Akai">
+            <summary>Akai</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ManufacturerID.EducationalUse">
+            <summary>This ID is for educational or development use only.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.PitchWheelSteps">
+            <summary>Half and whole value steps for the pitch wheel.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.PitchWheelSteps.WholeStepUp">
+            <summary>A complete whole step up.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.PitchWheelSteps.ThreeQuarterStepUp">
+            <summary>3/4 steps up.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.PitchWheelSteps.HalfStepUp">
+            <summary>1/2 step up.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.PitchWheelSteps.QuarterStepUp">
+            <summary>1/4 step up.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.PitchWheelSteps.NoStep">
+            <summary>No movement.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.PitchWheelSteps.QuarterStepDown">
+            <summary>1/4 step down.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.PitchWheelSteps.HalfStepDown">
+            <summary>1/2 step down.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.PitchWheelSteps.ThreeQuarterStepDown">
+            <summary>3/4 steps down.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.PitchWheelSteps.WholeStepDown">
+            <summary>A complete whole step down.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.Tonality">
+            <summary>The tonality of the key signature (major or minor).</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Tonality.Major">
+            <summary>Key is major.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Tonality.Minor">
+            <summary>Key is minor.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.Key">
+            <summary>The number of sharps or flats in the key signature.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.NoFlatsOrSharps">
+            <summary>Key has no sharps or flats.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.Flat1">
+            <summary>Key has 1 flat.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.Flat2">
+            <summary>Key has 2 flats.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.Flat3">
+            <summary>Key has 3 flats.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.Flat4">
+            <summary>Key has 4 flats.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.Flat5">
+            <summary>Key has 5 flats.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.Flat6">
+            <summary>Key has 6 flats.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.Flat7">
+            <summary>Key has 7 flats.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.Sharp1">
+            <summary>Key has 1 sharp.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.Sharp2">
+            <summary>Key has 2 sharps.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.Sharp3">
+            <summary>Key has 3 sharps.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.Sharp4">
+            <summary>Key has 4 sharps.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.Sharp5">
+            <summary>Key has 5 sharps.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.Sharp6">
+            <summary>Key has 6 sharps.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Key.Sharp7">
+            <summary>Key has 7 sharps.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.Controllers">
+            <summary>List of defined controllers.  All descriptions come from MidiRef4.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.BankSelectCourse">
+            <summary>Switches between groups of sounds when more than 128 programs are in use.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.ModulationWheelCourse">
+            <summary>Sets the modulation wheel to a particular value.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.BreathControllerCourse">
+            <summary>Often used to control aftertouch.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.FootPedalCourse">
+            <summary>Often used to control aftertouch.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.PortamentoTimeCourse">
+            <summary>The rate at which portamento slides the pitch between two notes.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.DataEntryCourse">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.VolumeCourse">
+            <summary>Volume level for a given channel.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.BalanceCourse">
+            <summary>Controls stereo-balance.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.PanPositionCourse">
+            <summary>Where the stereo sound should be placed within the sound field.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.ExpressionCourse">
+            <summary>Percentage of volume.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.EffectControl1Course">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.EffectControl2Course">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.GeneralPurposeSlider1">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.GeneralPurposeSlider2">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.GeneralPurposeSlider3">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.GeneralPurposeSlider4">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.BankSelectFine">
+            <summary>Switches between groups of sounds when more than 128 programs are in use.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.ModulationWheelFine">
+            <summary>Sets the modulation wheel to a particular value.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.BreathControllerFine">
+            <summary>Often used to control aftertouch.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.FootPedalFine">
+            <summary>Often used to control aftertouch.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.PortamentoTimeFine">
+            <summary>The rate at which portamento slides the pitch between two notes.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.DataEntryFine">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.VolumeFine">
+            <summary>Volume level for a given channel.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.BalanceFine">
+            <summary>Controls stereo-balance.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.PanPositionFine">
+            <summary>Where the stereo sound should be placed within the sound field.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.ExpressionFine">
+            <summary>Percentage of volume.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.EffectControl1Fine">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.EffectControl2Fine">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.HoldPedalOnOff">
+            <summary>Lengthens release time of playing notes.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.PortamentoOnOff">
+            <summary>The rate at which portamento slides the pitch between two notes.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.SustenutoPedalOnOff">
+            <summary>Sustains notes that are already on.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.SoftPedalOnOff">
+            <summary>Softens volume of any notes played.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.LegatoPedalOnOff">
+            <summary>Legato effect between notes.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.Hold2PedalOnOff">
+            <summary>Lengthens release time of playing notes.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.SoundVariation">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.SoundTimbre">
+            <summary>Controls envelope levels.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.SoundReleaseTime">
+            <summary>Controls envelope release times.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.SoundAttackTime">
+            <summary>Controls envelope attack time.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.SoundBrightness">
+            <summary>Controls filter's cutoff frequency.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.SoundControl6">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.SoundControl7">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.SoundControl8">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.SoundControl9">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.SoundControl10">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.GeneralPurposeButton1OnOff">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.GeneralPurposeButton2OnOff">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.GeneralPurposeButton3OnOff">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.GeneralPurposeButton4OnOff">
+            <summary>Various.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.EffectsLevel">
+            <summary>Controls level of effects.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.TremuloLevel">
+            <summary>Controls level of tremulo.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.ChorusLevel">
+            <summary>Controls level of chorus.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.CelesteLevel">
+            <summary>Detune amount for device.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.PhaserLevel">
+            <summary>Level of phaser effect.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.DataButtonIncrement">
+            <summary>Causes data button's value to increment.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.DataButtonDecrement">
+            <summary>Causes data button's value to decrement.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.NonRegisteredParameterFine">
+            <summary>Controls which parameter the button and data entry controls affect.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.NonRegisteredParameterCourse">
+            <summary>Controls which parameter the button and data entry controls affect.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.RegisteredParameterFine">
+            <summary>Controls which parameter the button and data entry controls affect.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.RegisteredParameterCourse">
+            <summary>Controls which parameter the button and data entry controls affect.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.AllSoundOff">
+            <summary>Mutes all sounding notes.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.AllControllersOff">
+            <summary>Resets controllers to default states.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.LocalKeyboardOnOff">
+            <summary>Turns on or off local keyboard.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.AllNotesOff">
+            <summary>Mutes all sounding notes.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.OmniModeOff">
+            <summary>Turns Omni off.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.OmniModeOn">
+            <summary>Turns Omni on.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.MonoOperation">
+            <summary>Enables Monophonic operation.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controllers.PolyOperation">
+            <summary>Enables Polyphonic operation.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.MidiEventCollection">
+            <summary>A collection of MIDI events.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiEventCollection._events">
+            <summary>The list of MIDI events in the collection.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.#ctor">
+            <summary>Initializes the collection.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.#ctor(Toub.Sound.Midi.MidiEvent[])">
+            <summary>Intializes the collection.</summary>
+            <param name="events">The MIDI events with which to initialize the collection.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.#ctor(Toub.Sound.Midi.MidiEventCollection)">
+            <summary>Intializes the collection.</summary>
+            <param name="c">The collection of MIDI events with which to initialize the collection.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.Add(Toub.Sound.Midi.MidiEvent)">
+            <summary>Adds a MIDI event message to the collection.</summary>
+            <param name="message">The event to be added.</param>
+            <returns>The position at which the event was added.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.Add(Toub.Sound.Midi.MidiEventCollection)">
+            <summary>Adds a collection of MIDI event messages to the collection.</summary>
+            <param name="messages">The events to be added.</param>
+            <returns>The position at which the first event was added.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.Insert(System.Int32,Toub.Sound.Midi.MidiEvent)">
+            <summary>Inserts a MIDI event message into the collection at the specified index.</summary>
+            <param name="index">The index at which to insert into the collection.</param>
+            <param name="message">The event to be added.</param>
+            <returns>The position at which the event was added.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.Contains(Toub.Sound.Midi.MidiEvent)">
+            <summary>Determines whether the message is in the collection.</summary>
+            <param name="message">The message for which to search.</param>
+            <returns>Whether the specified message is in the collection.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.Remove(Toub.Sound.Midi.MidiEvent)">
+            <summary>Removes an event message from the collection.</summary>
+            <param name="message">The event to be removed.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.ConvertDeltasToTotals">
+            <summary>Converts the delta times on all events to from delta times to total times.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.ConvertTotalsToDeltas">
+            <summary>Converts the delta times on all events from total times back to delta times.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.SortByTime">
+            <summary>Sorts the events based on deltaTime.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.Clone">
+            <summary>Creates a shallow-copy of the collection.</summary>
+            <returns>A shallow copy of this collection.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.System#ICloneable#Clone">
+            <summary>Creates a shallow-copy of the collection.</summary>
+            <returns>A shallow copy of this collection.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.CopyTo(Toub.Sound.Midi.MidiEvent[],System.Int32)">
+            <summary>Copies the collection of MIDI events to a MIDI events array.</summary>
+            <param name="array">The array to which the events should be copied.</param>
+            <param name="index">The index at which to start copying in the destination array.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
+            <summary>Copies the collection of MIDI events to a MIDI events array.</summary>
+            <param name="array">The array to which the events should be copied.</param>
+            <param name="index">The index at which to start copying in the destination array.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.GetEnumerator">
+            <summary>Gets an enumerator for the collection.</summary>
+            <returns>An enumerator for the events in the collection.</returns>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiEventCollection.Item(System.Int32)">
+            <summary>Gets or sets the MIDI event at the specified index into the collection.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiEventCollection.IsSynchronized">
+            <summary>Gets whether the collection is synchronized.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiEventCollection.Count">
+            <summary>Gets the number of events in the collection.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiEventCollection.SyncRoot">
+            <summary>Gets the synchronization root for this object.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.MidiEventCollection.EventComparer">
+            <summary>Enables comparison of two events based on delta times.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEventCollection.EventComparer.Compare(System.Object,System.Object)">
+            <summary>Compares two MidiEvents based on delta times.</summary>
+            <param name="x">The first MidiEvent to compare.</param>
+            <param name="y">The second MidiEvent to compare.</param>
+            <returns>-1 if x.DeltaTime is larger, 0 if they're the same, 1 otherwise.</returns>
+        </member>
+        <member name="T:Toub.Sound.Midi.NoteOff">
+            <summary>Midi event to stop playing a note.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.NoteVoiceMidiEvent">
+            <summary>Represents a voice category message that deals with notes.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.VoiceMidiEvent">
+            <summary>Represents a voice category message.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.MidiEvent">
+            <summary>A MIDI event, serving as the base class for all types of MIDI events.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiEvent._deltaTime">
+            <summary>The amount of time before this event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEvent.#ctor(System.Int64)">
+            <summary>Initialize the event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEvent.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEvent.CombineBytesTo14Bits(System.Byte,System.Byte)">
+            <summary>Combines two 7-bit values into a single 14-bit value.</summary>
+            <param name="upper">The upper 7-bits.</param>
+            <param name="lower">The lower 7-bits.</param>
+            <returns>A 14-bit value stored in an integer.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEvent.Split14BitsToBytes(System.Int32,System.Byte@,System.Byte@)">
+            <summary>Splits a 14-bit value into two bytes each with 7 of the bits.</summary>
+            <param name="bits">The value to be split.</param>
+            <param name="upperBits">The upper 7 bits.</param>
+            <param name="lowerBits">The lower 7 bits.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEvent.WriteVariableLength(System.IO.Stream,System.Int64)">
+            <summary>Writes bytes for a long value in the special 7-bit form.</summary>
+            <param name="outputStream">The stream to which the length should be written.</param>
+            <param name="value">The value to be converted and written.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEvent.DataToString(System.Byte[])">
+            <summary>Converts an array of bytes into human-readable form.</summary>
+            <param name="data">The array to convert.</param>
+            <returns>The string containing the bytes.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEvent.GetNoteName(System.Byte)">
+            <summary>Gets the name of a note given its numeric value.</summary>
+            <param name="note">The numeric value of the note.</param>
+            <returns>The name of the note.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEvent.GetNoteValue(System.String)">
+            <summary>Gets the note value for a string representing the name of a note.</summary>
+            <param name="noteName">
+            The name of the note, such as "C#4" or "Eb0".
+            Valid names are in the range from "C0" (0) to "G10" (127).
+            </param>
+            <returns>The numeric value of the specified note.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEvent.GetNoteValue(Toub.Sound.Midi.GeneralMidiPercussion)">
+            <summary>Gets the note value for the specific percussion.</summary>
+            <param name="percussion">The percussion for which we need the note value.</param>
+            <returns>The numeric value of the specified percussion.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEvent.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEvent.Clone">
+            <summary>Creates a shallow copy of the MIDI event.</summary>
+            <returns>A shallow-clone of the MIDI event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiEvent.System#ICloneable#Clone">
+            <summary>Creates a shallow-copy of the object.</summary>
+            <returns>A shallow-clone of the MIDI event.</returns>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiEvent.DeltaTime">
+            <summary>Gets or sets the amount of time before this event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.VoiceMidiEvent._category">
+            <summary>The status identifier (0x0 through 0xF) for this voice event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.VoiceMidiEvent._channel">
+            <summary>The channel (0x0 through 0xF) for this voice event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.VoiceMidiEvent.#ctor(System.Int64,System.Byte,System.Byte)">
+            <summary>Intializes the voice MIDI event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="category">The category identifier (0x0 through 0xF) for this voice event.</param>
+            <param name="channel">The channel (0x0 through 0xF) for this voice event.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.VoiceMidiEvent.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.VoiceMidiEvent.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.VoiceMidiEvent.GetStatusByte">
+            <summary>Gets the status byte for the message event.</summary>
+            <returns>The status byte (combination of category and channel) for the message event.</returns>
+        </member>
+        <member name="P:Toub.Sound.Midi.VoiceMidiEvent.Category">
+            <summary>Gets the status identifier (0x0 through 0xF) for this voice event.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.VoiceMidiEvent.Channel">
+            <summary>Gets or sets the channel (0x0 through 0xF) for this voice event.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.VoiceMidiEvent.Status">
+            <summary>Gets the status byte for the event message (combination of category and channel).</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.VoiceMidiEvent.Message">
+            <summary>Gets the Dword that represents this event as a MIDI event message.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.VoiceMidiEvent.Parameter1">
+            <summary>The first parameter as sent in the MIDI message.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.VoiceMidiEvent.Parameter2">
+            <summary>The second parameter as sent in the MIDI message.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.NoteVoiceMidiEvent._note">
+            <summary>The MIDI note to modify (0x0 to 0x7F).</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteVoiceMidiEvent.#ctor(System.Int64,System.Byte,System.Byte,System.Byte)">
+            <summary>Intializes the note voice MIDI event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="category">The category identifier (0x0 through 0xF) for this voice event.</param>
+            <param name="channel">The channel (0x0 through 0xF) for this voice event.</param>
+            <param name="note">The MIDI note to modify (0x0 to 0x7F).</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteVoiceMidiEvent.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteVoiceMidiEvent.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.NoteVoiceMidiEvent.Note">
+            <summary>Gets or sets the MIDI note (0x0 to 0x7F).</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.NoteVoiceMidiEvent.Parameter1">
+            <summary>The first parameter as sent in the MIDI message.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.NoteOff._CATEGORY">
+            <summary>The category status byte for NoteOff messages.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.NoteOff._velocity">
+            <summary>The velocity of the note (0x0 to 0x7F).</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteOff.#ctor(System.Int64,System.Byte,System.String,System.Byte)">
+            <summary>Initialize the NoteOff MIDI event message.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="channel">The channel (0x0 through 0xF) for this voice event.</param>
+            <param name="note">The name of the MIDI note to stop sounding ("C0" to "G10").</param>
+            <param name="velocity">The velocity of the note (0x0 to 0x7F).</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteOff.#ctor(System.Int64,Toub.Sound.Midi.GeneralMidiPercussion,System.Byte)">
+            <summary>Initialize the NoteOff MIDI event message.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="percussion">The percussion instrument to sound.</param>
+            <param name="velocity">The velocity of the note (0x0 to 0x7F).</param>
+            <remarks>Channel 10 (internally 0x9) is assumed.</remarks>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteOff.#ctor(System.Int64,System.Byte,System.Byte,System.Byte)">
+            <summary>Initialize the NoteOff MIDI event message.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="channel">The channel (0x0 through 0xF) for this voice event.</param>
+            <param name="note">The MIDI note to stop sounding (0x0 to 0x7F).</param>
+            <param name="velocity">The velocity of the note (0x0 to 0x7F).</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteOff.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteOff.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.NoteOff.Velocity">
+            <summary>Gets or sets the velocity of the note (0x0 to 0x7F).</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.NoteOff.Parameter2">
+            <summary>The second parameter as sent in the MIDI message.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.NoteOn">
+            <summary>Midi event to play a note.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.NoteOn._CATEGORY">
+            <summary>The category status byte for NoteOn messages.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.NoteOn._velocity">
+            <summary>The velocity of the note (0x0 to 0x7F).</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteOn.#ctor(System.Int64,System.Byte,System.String,System.Byte)">
+            <summary>Initialize the NoteOn MIDI event message.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="channel">The channel (0x0 through 0xF) for this voice event.</param>
+            <param name="note">The name of the MIDI note to sound ("C0" to "G10").</param>
+            <param name="velocity">The velocity of the note (0x0 to 0x7F).</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteOn.#ctor(System.Int64,Toub.Sound.Midi.GeneralMidiPercussion,System.Byte)">
+            <summary>Initialize the NoteOn MIDI event message.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="percussion">The percussion instrument to sound.</param>
+            <param name="velocity">The velocity of the note (0x0 to 0x7F).</param>
+            <remarks>Channel 10 (internally 0x9) is assumed.</remarks>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteOn.#ctor(System.Int64,System.Byte,System.Byte,System.Byte)">
+            <summary>Initialize the NoteOn MIDI event message.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="channel">The channel (0x0 through 0xF) for this voice event.</param>
+            <param name="note">The MIDI note to sound (0x0 to 0x7F).</param>
+            <param name="velocity">The velocity of the note (0x0 to 0x7F).</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteOn.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteOn.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteOn.Complete(System.Int64,System.Byte,System.String,System.Byte,System.Int64)">
+            <summary>Create a complete note (both on and off messages).</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="channel">The channel (0x0 through 0xF) for this voice event.</param>
+            <param name="note">The name of the MIDI note to sound ("C0" to "G10").</param>
+            <param name="velocity">The velocity of the note (0x0 to 0x7F).</param>
+            <param name="duration">The duration of the note.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteOn.Complete(System.Int64,Toub.Sound.Midi.GeneralMidiPercussion,System.Byte,System.Int64)">
+            <summary>Create a complete note (both on and off messages).</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="percussion">The percussion instrument to sound.</param>
+            <param name="velocity">The velocity of the note (0x0 to 0x7F).</param>
+            <param name="duration">The duration of the note.</param>
+            <remarks>Channel 10 (internally 0x9) is assumed.</remarks>
+        </member>
+        <member name="M:Toub.Sound.Midi.NoteOn.Complete(System.Int64,System.Byte,System.Byte,System.Byte,System.Int64)">
+            <summary>Create a complete note (both on and off messages) with a specified duration.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="channel">The channel (0x0 through 0xF) for this voice event.</param>
+            <param name="note">The MIDI note to sound (0x0 to 0x7F).</param>
+            <param name="velocity">The velocity of the note (0x0 to 0x7F).</param>
+            <param name="duration">The duration of the note.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.NoteOn.Velocity">
+            <summary>Gets or sets the velocity of the note (0x0 to 0x7F).</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.NoteOn.Parameter2">
+            <summary>The second parameter as sent in the MIDI message.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.Aftertouch">
+            <summary>MIDI event to modify a note according to the aftertouch of a key.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Aftertouch._CATEGORY">
+            <summary>The category status byte for Aftertouch messages.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Aftertouch._pressure">
+            <summary>The pressure of the note (0x0 to 0x7F).</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.Aftertouch.#ctor(System.Int64,System.Byte,System.String,System.Byte)">
+            <summary>Initialize the Aftertouch MIDI event message.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="channel">The channel (0x0 through 0xF) for this voice event.</param>
+            <param name="note">The name of the MIDI note to modify ("C0" to "G10").</param>
+            <param name="pressure">The velocity of the note (0x0 to 0x7F).</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.Aftertouch.#ctor(System.Int64,Toub.Sound.Midi.GeneralMidiPercussion,System.Byte)">
+            <summary>Initialize the Aftertouch MIDI event message.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="percussion">The percussion instrument to modify.</param>
+            <param name="pressure">The pressure of the note (0x0 to 0x7F).</param>
+            <remarks>Channel 10 (internally 0x9) is assumed.</remarks>
+        </member>
+        <member name="M:Toub.Sound.Midi.Aftertouch.#ctor(System.Int64,System.Byte,System.Byte,System.Byte)">
+            <summary>Initialize the Aftertouch MIDI event message.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="channel">The channel (0x0 through 0xF) for this voice event.</param>
+            <param name="note">The MIDI note to modify (0x0 to 0x7F).</param>
+            <param name="pressure">The pressure of the note (0x0 to 0x7F).</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.Aftertouch.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.Aftertouch.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.Aftertouch.Pressure">
+            <summary>Gets or sets the pressure of the note (0x0 to 0x7F).</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.Aftertouch.Parameter2">
+            <summary>The second parameter as sent in the MIDI message.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.Controller">
+            <summary>
+            MIDI event to modify the tone with data from a pedal, lever, or other device; 
+            also used for miscellaneous controls such as volume and bank select.
+            </summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controller._CATEGORY">
+            <summary>The category status byte for Controller messages.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controller._number">
+            <summary>The type of controller message (0x0 to 0x7F).</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Controller._value">
+            <summary>The value of the controller message (0x0 to 0x7F).</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.Controller.#ctor(System.Int64,System.Byte,Toub.Sound.Midi.Controllers,System.Byte)">
+            <summary>Initialize the Controller MIDI event message.</summary>
+            <param name="deltaTime">The delta-time since the previous message.</param>
+            <param name="channel">The channel to which to write the message (0 through 15).</param>
+            <param name="number">The type of controller message to be written.</param>
+            <param name="value">The value of the controller message.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.Controller.#ctor(System.Int64,System.Byte,System.Byte,System.Byte)">
+            <summary>Initialize the Controller MIDI event message.</summary>
+            <param name="deltaTime">The delta-time since the previous message.</param>
+            <param name="channel">The channel to which to write the message (0 through 15).</param>
+            <param name="number">The type of controller message to be written.</param>
+            <param name="value">The value of the controller message.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.Controller.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.Controller.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.Controller.Number">
+            <summary>Gets or sets type of controller message to be written (0x0 to 0x7F).</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.Controller.Value">
+            <summary>Gets or sets the value of the controller message (0x0 to 0x7F).</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.Controller.Parameter1">
+            <summary>The first parameter as sent in the MIDI message.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.Controller.Parameter2">
+            <summary>The second parameter as sent in the MIDI message.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.ProgramChange">
+            <summary>MIDI event to select an instrument for the channel by assigning a patch number.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ProgramChange._CATEGORY">
+            <summary>The category status byte for ProgramChange messages.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ProgramChange._number">
+            <summary>The number of the program to which to change (0x0 to 0x7F).</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.ProgramChange.#ctor(System.Int64,System.Byte,Toub.Sound.Midi.GeneralMidiInstruments)">
+            <summary>Initialize the Controller MIDI event message.</summary>
+            <param name="deltaTime">The delta-time since the previous message.</param>
+            <param name="channel">The channel to which to write the message (0 through 15).</param>
+            <param name="number">The instrument to which to change.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.ProgramChange.#ctor(System.Int64,System.Byte,System.Byte)">
+            <summary>Initialize the Controller MIDI event message.</summary>
+            <param name="deltaTime">The delta-time since the previous message.</param>
+            <param name="channel">The channel to which to write the message (0 through 15).</param>
+            <param name="number">The number of the program to which to change.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.ProgramChange.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.ProgramChange.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.ProgramChange.Number">
+            <summary>Gets or sets the number of the program to which to change (0x0 to 0x7F).</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.ProgramChange.Parameter1">
+            <summary>The first parameter as sent in the MIDI message.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.ProgramChange.Parameter2">
+            <summary>The second parameter as sent in the MIDI message.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.ChannelPressure">
+            <summary>MIDI event to apply pressure to a channel's currently playing notes.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ChannelPressure._CATEGORY">
+            <summary>The category status byte for ChannelPressure messages.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ChannelPressure._pressure">
+            <summary>The amount of pressure to be applied (0x0 to 0x7F).</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.ChannelPressure.#ctor(System.Int64,System.Byte,System.Byte)">
+            <summary>Initialize the Controller MIDI event message.</summary>
+            <param name="deltaTime">The delta-time since the previous message.</param>
+            <param name="channel">The channel to which to write the message (0 through 15).</param>
+            <param name="pressure">The pressure to be applied.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.ChannelPressure.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.ChannelPressure.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.ChannelPressure.Pressure">
+            <summary>Gets or sets the amount pressure to be applied (0x0 to 0x7F).</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.ChannelPressure.Parameter1">
+            <summary>The first parameter as sent in the MIDI message.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.ChannelPressure.Parameter2">
+            <summary>The second parameter as sent in the MIDI message.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.PitchWheel">
+            <summary>MIDI event to modify the pitch of all notes played on the channel.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.PitchWheel._CATEGORY">
+            <summary>The category status byte for PitchWheel messages.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.PitchWheel._upperBits">
+            <summary>The upper 7-bits of the wheel position..</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.PitchWheel._lowerBits">
+            <summary>The lower 7-bits of the wheel position..</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.PitchWheel.#ctor(System.Int64,System.Byte,Toub.Sound.Midi.PitchWheelSteps)">
+            <summary>Initialize the Controller MIDI event message.</summary>
+            <param name="deltaTime">The delta-time since the previous message.</param>
+            <param name="channel">The channel to which to write the message (0 through 15).</param>
+            <param name="steps">The amount of pitch change to apply.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.PitchWheel.#ctor(System.Int64,System.Byte,System.Byte,System.Byte)">
+            <summary>Initialize the Controller MIDI event message.</summary>
+            <param name="deltaTime">The delta-time since the previous message.</param>
+            <param name="channel">The channel to which to write the message (0 through 15).</param>
+            <param name="upperBits">The upper 7 bits of the position.</param>
+            <param name="lowerBits">The lower 7 bits of the position.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.PitchWheel.#ctor(System.Int64,System.Byte,System.Int32)">
+            <summary>Initialize the Controller MIDI event message.</summary>
+            <param name="deltaTime">The delta-time since the previous message.</param>
+            <param name="channel">The channel to which to write the message (0 through 15).</param>
+            <param name="position">The position of the wheel.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.PitchWheel.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.PitchWheel.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.PitchWheel.UpperBits">
+            <summary>Gets or sets the upper 7 bits of the position.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.PitchWheel.LowerBits">
+            <summary>Gets or sets the lower 7 bits of the position.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.PitchWheel.Position">
+            <summary>Gets or sets the wheel position.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.PitchWheel.Parameter1">
+            <summary>The first parameter as sent in the MIDI message.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.PitchWheel.Parameter2">
+            <summary>The second parameter as sent in the MIDI message.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.SequenceNumber">
+            <summary>A sequence number meta event message.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.MetaMidiEvent">
+            <summary>Represents a meta event message.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MetaMidiEvent._metaEventID">
+            <summary>The ID of the meta event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MetaMidiEvent.#ctor(System.Int64,System.Byte)">
+            <summary>Intializes the meta MIDI event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="metaEventID">The ID of the meta event.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MetaMidiEvent.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MetaMidiEvent.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.MetaMidiEvent.MetaEventID">
+            <summary>Gets the ID of this meta event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.SequenceNumber._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.SequenceNumber._number">
+            <summary>The sequence number for the event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.SequenceNumber.#ctor(System.Int64,System.Int32)">
+            <summary>Intializes the sequence number meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="number">The sequence number for the event.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.SequenceNumber.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.SequenceNumber.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.SequenceNumber.Number">
+            <summary>Gets or sets the sequence number for the event.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.Text">
+            <summary>A text meta event.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.TextMetaMidiEvent">
+            <summary>Represents a text meta event message.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.TextMetaMidiEvent._text">
+            <summary>The text associated with the event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.TextMetaMidiEvent.#ctor(System.Int64,System.Byte,System.String)">
+            <summary>Intializes the meta MIDI event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="metaEventID">The ID of the meta event.</param>
+            <param name="text">The text associated with the event.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.TextMetaMidiEvent.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.TextMetaMidiEvent.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.TextMetaMidiEvent.Text">
+            <summary>Gets or sets the text associated with this event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Text._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.Text.#ctor(System.Int64,System.String)">
+            <summary>Initialize the text meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="text">The text associated with the event.</param>
+        </member>
+        <member name="T:Toub.Sound.Midi.Copyright">
+            <summary>A copyright meta event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Copyright._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.Copyright.#ctor(System.Int64,System.String)">
+            <summary>Initialize the copyright meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="text">The text associated with the event.</param>
+        </member>
+        <member name="T:Toub.Sound.Midi.SequenceTrackName">
+            <summary>A sequence/track name meta event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.SequenceTrackName._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.SequenceTrackName.#ctor(System.Int64,System.String)">
+            <summary>Initialize the sequence/track name meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="text">The text associated with the event.</param>
+        </member>
+        <member name="T:Toub.Sound.Midi.Instrument">
+            <summary>A instrument name meta event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Instrument._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.Instrument.#ctor(System.Int64,System.String)">
+            <summary>Initialize the instrument meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="text">The text associated with the event.</param>
+        </member>
+        <member name="T:Toub.Sound.Midi.Lyric">
+            <summary>A lyric name meta event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Lyric._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.Lyric.#ctor(System.Int64,System.String)">
+            <summary>Initialize the lyric meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="text">The text associated with the event.</param>
+        </member>
+        <member name="T:Toub.Sound.Midi.Marker">
+            <summary>A marker name meta event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Marker._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.Marker.#ctor(System.Int64,System.String)">
+            <summary>Initialize the marker meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="text">The text associated with the event.</param>
+        </member>
+        <member name="T:Toub.Sound.Midi.CuePoint">
+            <summary>A cue point name meta event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.CuePoint._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.CuePoint.#ctor(System.Int64,System.String)">
+            <summary>Initialize the cue point meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="text">The text associated with the event.</param>
+        </member>
+        <member name="T:Toub.Sound.Midi.ProgramName">
+            <summary>A program name meta event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ProgramName._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.ProgramName.#ctor(System.Int64,System.String)">
+            <summary>Initialize the program name meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="text">The text associated with the event.</param>
+        </member>
+        <member name="T:Toub.Sound.Midi.DeviceName">
+            <summary>A device name meta event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.DeviceName._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.DeviceName.#ctor(System.Int64,System.String)">
+            <summary>Initialize the device name meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="text">The text associated with the event.</param>
+        </member>
+        <member name="T:Toub.Sound.Midi.ChannelPrefix">
+            <summary>A channel prefix meta event message.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ChannelPrefix._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ChannelPrefix._prefix">
+            <summary>The prefix for the event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.ChannelPrefix.#ctor(System.Int64,System.Byte)">
+            <summary>Intializes the channel prefix event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="prefix">The prefix for the event.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.ChannelPrefix.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.ChannelPrefix.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.ChannelPrefix.Prefix">
+            <summary>Gets or sets the prefix for the event.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.MidiPort">
+            <summary>A MIDI port meta event message.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiPort._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiPort._port">
+            <summary>The port for the event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiPort.#ctor(System.Int64,System.Byte)">
+            <summary>Intializes the MIDI port event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="port">The port for the event.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiPort.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiPort.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiPort.Port">
+            <summary>Gets or sets the port for the event.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.EndOfTrack">
+            <summary>An end of track meta event message.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.EndOfTrack._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.EndOfTrack.#ctor(System.Int64)">
+            <summary>Intializes the end of track meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.EndOfTrack.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="T:Toub.Sound.Midi.Tempo">
+            <summary>A tempo meta event message.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Tempo._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Tempo._tempo">
+            <summary>The tempo for the event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.Tempo.#ctor(System.Int64,System.Int32)">
+            <summary>Intializes the tempo meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="value">The tempo for the event.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.Tempo.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.Tempo.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.Tempo.Value">
+            <summary>Gets or sets the tempo for the event.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.SMPTEOffset">
+            <summary>An SMPTE offset meta event message.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.SMPTEOffset._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.SMPTEOffset._hours">
+            <summary>Hours for the event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.SMPTEOffset._minutes">
+            <summary>Minutes for the event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.SMPTEOffset._seconds">
+            <summary>Seconds for the event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.SMPTEOffset._frames">
+            <summary>Frames for the event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.SMPTEOffset._fractionalFrames">
+            <summary>Fractional frames for the event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.SMPTEOffset.#ctor(System.Int64,System.Byte,System.Byte,System.Byte,System.Byte,System.Byte)">
+            <summary>Intializes the SMTPE offset meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="hours">Hours for the event.</param>
+            <param name="minutes">Minutes for the event.</param>
+            <param name="seconds">Seconds for the event.</param>
+            <param name="frames">Frames for the event.</param>
+            <param name="fractionalFrames">Fractional frames for the event.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.SMPTEOffset.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.SMPTEOffset.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.SMPTEOffset.Hours">
+            <summary>Gets or sets the hours for the event.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.SMPTEOffset.Minutes">
+            <summary>Gets or sets the minutes for the event.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.SMPTEOffset.Seconds">
+            <summary>Gets or sets the seconds for the event.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.SMPTEOffset.Frames">
+            <summary>Gets or sets the frames for the event.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.SMPTEOffset.FractionalFrames">
+            <summary>Gets or sets the fractional frames for the event.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.TimeSignature">
+            <summary>A time signature meta event message.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.TimeSignature._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.TimeSignature._numerator">
+            <summary>Numerator of the time signature.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.TimeSignature._denominator">
+            <summary>Negative power of two, denominator of time signature.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.TimeSignature._midiClocksPerClick">
+            <summary>The number of MIDI clocks per metronome click.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.TimeSignature._numberOfNotated32nds">
+            <summary>The number of notated 32nd notes per MIDI quarter note.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.TimeSignature.#ctor(System.Int64,System.Byte,System.Byte,System.Byte,System.Byte)">
+            <summary>Intializes the time signature meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="numerator">Numerator of the time signature.</param>
+            <param name="denominator">Negative power of two, denominator of time signature.</param>
+            <param name="midiClocksPerClick">The number of MIDI clocks per metronome click.</param>
+            <param name="numberOfNotated32nds">The number of notated 32nd notes per MIDI quarter note.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.TimeSignature.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.TimeSignature.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.TimeSignature.Numerator">
+            <summary>Gets or sets the numerator for the event.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.TimeSignature.Denominator">
+            <summary>Gets or sets the denominator for the event.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.TimeSignature.MidiClocksPerClick">
+            <summary>Gets or sets the MIDI clocks per click for the event.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.TimeSignature.NumberOfNotated32nds">
+            <summary>Gets or sets the number of notated 32 notes per MIDI quarter note for the event.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.KeySignature">
+            <summary>A key signature meta event message.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.KeySignature._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.KeySignature._key">
+            <summary>Number of sharps or flats in the signature.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.KeySignature._tonality">
+            <summary>Tonality of the signature.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.KeySignature.#ctor(System.Int64,Toub.Sound.Midi.Key,Toub.Sound.Midi.Tonality)">
+            <summary>Intializes the meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="key">Key of the signature.</param>
+            <param name="tonality">Tonality of the signature.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.KeySignature.#ctor(System.Int64,System.Byte,System.Byte)">
+            <summary>Intializes the key signature meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="key">Key of the signature.</param>
+            <param name="tonality">Tonality of the signature.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.KeySignature.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.KeySignature.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.KeySignature.Key">
+            <summary>Gets or sets the numerator for the event.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.KeySignature.Tonality">
+            <summary>Gets or sets the denominator for the event.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.Proprietary">
+            <summary>A proprietary meta event message.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Proprietary._METAID">
+            <summary>The meta id for this event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.Proprietary._data">
+            <summary>The data of the event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.Proprietary.#ctor(System.Int64,System.Byte[])">
+            <summary>Intializes the proprietary meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="data">The data associated with the event.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.Proprietary.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.Proprietary.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.Proprietary.Data">
+            <summary>Gets or sets the data for the event.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.UnknownMetaMidiEvent">
+            <summary>An unknown meta event message.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.UnknownMetaMidiEvent._data">
+            <summary>The data of the event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.UnknownMetaMidiEvent.#ctor(System.Int64,System.Byte,System.Byte[])">
+            <summary>Intializes the meta event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="metaEventID">The event ID for this meta event.</param>
+            <param name="data">The data associated with the event.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.UnknownMetaMidiEvent.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.UnknownMetaMidiEvent.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.UnknownMetaMidiEvent.Data">
+            <summary>Gets or sets the data for the event.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.SystemExclusiveMidiEvent">
+            <summary>A system exclusive MIDI event.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.SystemExclusiveMidiEvent._data">
+            <summary>The data for the event.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.SystemExclusiveMidiEvent.#ctor(System.Int64,System.Byte[])">
+            <summary>Intializes the meta MIDI event.</summary>
+            <param name="deltaTime">The amount of time before this event.</param>
+            <param name="data">The data for the event.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.SystemExclusiveMidiEvent.ToString">
+            <summary>Generate a string representation of the event.</summary>
+            <returns>A string representation of the event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.SystemExclusiveMidiEvent.Write(System.IO.Stream)">
+            <summary>Write the event to the output stream.</summary>
+            <param name="outputStream">The stream to which the event should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.SystemExclusiveMidiEvent.Data">
+            <summary>Gets or sets the data for this event.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.MTrkChunkHeader">
+            <summary>"MTrk" header for writing out tracks.</summary>
+            <remarks>"MTrkChunkHeader" is a bit of a misnomer as it includes all of the data for the track, as well, in byte form.</remarks>
+        </member>
+        <member name="F:Toub.Sound.Midi.MTrkChunkHeader._header">
+            <summary>Additional chunk header data.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MTrkChunkHeader._data">
+            <summary>Data for which this is a header.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MTrkChunkHeader.#ctor(System.Byte[])">
+            <summary>Initialize the MTrk chunk header.</summary>
+            <param name="data">The track data for which this is a header.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MTrkChunkHeader.ValidateHeader(Toub.Sound.Midi.ChunkHeader)">
+            <summary>Validates that a header is correct as an MThd header.</summary>
+            <param name="header">The header to be validated.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MTrkChunkHeader.Write(System.IO.Stream)">
+            <summary>Writes the track header out to the stream.</summary>
+            <param name="outputStream">The stream to which the header should be written.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MTrkChunkHeader.Read(System.IO.Stream)">
+            <summary>Read in an MTrk chunk from the stream.</summary>
+            <param name="inputStream">The stream from which to read the MTrk chunk.</param>
+            <returns>The MTrk chunk read.</returns>
+        </member>
+        <member name="P:Toub.Sound.Midi.MTrkChunkHeader.Header">
+            <summary>Gets additional chunk header data.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MTrkChunkHeader.Data">
+            <summary>Gets the data for which this is a header.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MTrkChunkHeader.MTrkID">
+            <summary>Gets the MTrk header id.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.MThdChunkHeader">
+            <summary>"MThd" header for writing out MIDI files.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MThdChunkHeader._header">
+            <summary>Additional chunk header data.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MThdChunkHeader._format">
+            <summary>The format for the MIDI file (0, 1, or 2).</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MThdChunkHeader._numTracks">
+            <summary>The number of tracks in the MIDI sequence.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MThdChunkHeader._division">
+            <summary>Specifies the meaning of the delta-times</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MThdChunkHeader.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>Initialize the MThd chunk header.</summary>
+            <param name="format">
+            The format for the MIDI file (0, 1, or 2).
+            0 - a single multi-channel track
+            1 - one or more simultaneous tracks
+            2 - one or more sequentially independent single-track patterns
+            </param>
+            <param name="numTracks">The number of tracks in the MIDI file.</param>
+            <param name="division">
+            The meaning of the delta-times in the file.
+            If the number is zero or positive, then bits 14 thru 0 represent the number of delta-time 
+            ticks which make up a quarter-note. If number is negative, then bits 14 through 0 represent
+            subdivisions of a second, in a way consistent with SMPTE and MIDI time code.
+            </param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MThdChunkHeader.ValidateHeader(Toub.Sound.Midi.ChunkHeader)">
+            <summary>Validates that a header is correct as an MThd header.</summary>
+            <param name="header">The header to be validated.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MThdChunkHeader.Write(System.IO.Stream)">
+            <summary>Writes the MThd header out to the stream.</summary>
+            <param name="outputStream">The stream to which the header should be written.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MThdChunkHeader.Read(System.IO.Stream)">
+            <summary>Read in an MThd chunk from the stream.</summary>
+            <param name="inputStream">The stream from which to read the MThd chunk.</param>
+            <returns>The MThd chunk read.</returns>
+        </member>
+        <member name="P:Toub.Sound.Midi.MThdChunkHeader.Header">
+            <summary>Gets additional chunk header data.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MThdChunkHeader.Format">
+            <summary>Gets the format for the MIDI file (0, 1, or 2).</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MThdChunkHeader.NumberOfTracks">
+            <summary>Gets the number of tracks in the MIDI sequence.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MThdChunkHeader.Division">
+            <summary>Gets the meaning of the delta-times</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MThdChunkHeader.MThdID">
+            <summary>Gets the id for an MThd header.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.ChunkHeader">
+            <summary>Chunk header to store base MIDI chunk information.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ChunkHeader._id">
+            <summary>The id representing this chunk header.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.ChunkHeader._length">
+            <summary>The amount of data following the header.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.ChunkHeader.#ctor(System.Byte[],System.Int64)">
+            <summary>Initialize the ChunkHeader.</summary>
+            <param name="id">The 4-byte header identifier.</param>
+            <param name="length">The amount of data to be stored under this header.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.ChunkHeader.Write(System.IO.Stream)">
+            <summary>Writes the chunk header out to the stream.</summary>
+            <param name="outputStream">The stream to which the header should be written.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.ChunkHeader.Read(System.IO.Stream)">
+            <summary>Reads a chunk header from the input stream.</summary>
+            <param name="inputStream">The stream from which to read.</param>
+            <returns>The chunk header read from the stream.</returns>
+        </member>
+        <member name="P:Toub.Sound.Midi.ChunkHeader.ID">
+            <summary>Gets the id representing this chunk header.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.ChunkHeader.Length">
+            <summary>Gets the amount of data following the header.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.MidiInterop">
+            <summary>Provides access to the Media Control Interface and other MIDI functionality.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiInterop._MIDI_MAPPER">
+            <summary>The default output MIDI device id.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.MciSendString(System.String)">
+            <summary>Sends an MCI command.</summary>
+            <param name="command">The command to be sent.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.GetMciError(System.Int32)">
+            <summary>Gets the description for the given MCI error code.</summary>
+            <param name="errorCode">The error code for which we need an error description.</param>
+            <returns>The error description (or null if none exists).</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.OpenMidiOut">
+            <summary>Opens the default MIDI output device.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.OpenMidiOut(System.Int32)">
+            <summary>Opens the specified MIDI output device.</summary>
+            <param name="deviceID">The ID of the MIDI output device to be opened.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.SendMidiMessage(Toub.Sound.Midi.MidiInterop.MidiDeviceHandle,System.Int32)">
+            <summary>Sends the message to as a short MIDI message to the MIDI output device.</summary>
+            <param name="handle">Handle to the MIDI output device.</param>
+            <param name="message">The message to be sent.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.ThrowMCIError(System.Int32,System.String)">
+            <summary>Throws an exception based on the MCI error number.</summary>
+            <param name="rv">The MCI error number.</param>
+            <param name="optionalMessage">The message to throw if an MCI message can't be retrieved.</param>
+        </member>
+        <member name="T:Toub.Sound.Midi.MidiInterop.MidiDeviceHandle">
+            <summary>Represents a safe handle to a MIDI device.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiInterop.MidiDeviceHandle._handle">
+            <summary>Handle to the MIDI device.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiInterop.MidiDeviceHandle._isDisposed">
+            <summary>Whether the handle has been disposed.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.MidiDeviceHandle.#ctor(System.Int32)">
+            <summary>Initialize the safe handle.</summary>
+            <param name="handle">The handle to the MIDI device.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.MidiDeviceHandle.Finalize">
+            <summary>Dispose of the handle.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.MidiDeviceHandle.Close">
+            <summary>Closes the handle.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.MidiDeviceHandle.Dispose(System.Boolean)">
+            <summary>Dispose of the handle.</summary>
+            <param name="disposing">Whether we're being called from Dispose.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.MidiDeviceHandle.System#IDisposable#Dispose">
+            <summary>Dispose of the handle.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiInterop.MidiDeviceHandle.IsOpen">
+            <summary>Gets whether the handle is active and open.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiInterop.MidiDeviceHandle.Handle">
+            <summary>Gets the underlying handle.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.MidiInterop.NativeMethods">
+            <summary>Imports for native Win32 functions.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.NativeMethods.MciSendString(System.String,System.Text.StringBuilder,System.Int32,System.IntPtr)">
+            <summary>
+            The mciSendString function sends a command string to an MCI device. The device that the 
+            command is sent to is specified in the command string.
+            </summary>
+            <param name="lpszCommand">Pointer to a null-terminated string that specifies an MCI command string.</param>
+            <param name="lpszReturnString">Pointer to a buffer that receives return information. If no return information is needed, this parameter can be null.</param>
+            <param name="cchReturn">Size, in characters, of the return buffer specified by the lpszReturnString parameter.</param>
+            <param name="hwndCallback">Handle to a callback window if the "notify" flag was specified in the command string.</param>
+            <returns>
+            Returns zero if successful or an error otherwise. The low-order word of the returned 
+            DWORD value contains the error return value. If the error is device-specific, the 
+            high-order word of the return value is the driver identifier; otherwise, the high-order 
+            word is zero.
+            </returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.NativeMethods.MciGetErrorString(System.Int32,System.Text.StringBuilder,System.Int32)">
+            <summary>The mciGetErrorString function retrieves a string that describes the specified MCI error code.</summary>
+            <param name="fdwError">Error code returned by the mciSendCommand or mciSendString function.</param>
+            <param name="lpszErrorText">Pointer to a buffer that receives a null-terminated string describing the specified error.</param>
+            <param name="cchErrorText">Length of the buffer, in characters, pointed to by the lpszErrorText parameter.</param>
+            <returns>Returns non-zero if successful or 0 if the error code is not known.</returns>
+            <remarks>Each string that MCI returns, whether data or an error description, can be a maximum of 128 characters.</remarks>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.NativeMethods.MidiOutOpen(System.Int32@,System.Int32,System.IntPtr,System.Int32,System.Int32)">
+            <summary>The midiOutOpen function opens a MIDI output device for playback.</summary>
+            <param name="lphMidiOut">Pointer to an HMIDIOUT handle.</param>
+            <param name="uDeviceID">Identifier of the MIDI output device that is to be opened.</param>
+            <param name="dwCallback">Pointer to a callback function, an event handle, a thread identifier, or a handle of a window or thread called during MIDI playback to process messages related to the progress of the playback.</param>
+            <param name="dwInstance">User instance data passed to the callback.</param>
+            <param name="dwFlags">Callback flag for opening the device.</param>
+            <returns>Returns MMSYSERR_NOERROR if successful or an error otherwise.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.NativeMethods.MidiOutClose(System.Int32)">
+            <summary>The midiOutClose function closes the specified MIDI output device.</summary>
+            <param name="hMidiOut">Handle to the MIDI output device.</param>
+            <returns>Returns MMSYSERR_NOERROR if successful or an error otherwise.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiInterop.NativeMethods.MidiOutShortMessage(System.Int32,System.Int32)">
+            <summary>The midiOutShortMsg function sends a short MIDI message to the specified MIDI output device.</summary>
+            <param name="hMidiOut">Handle to the MIDI output device.</param>
+            <param name="dwMsg">MIDI message.</param>
+            <returns>Returns MMSYSERR_NOERROR if successful or an error otherwise.</returns>
+        </member>
+        <member name="T:Toub.Sound.Midi.MidiParser">
+            <summary>MIDI track parser.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiParser.#ctor">
+            <summary>Prevent external instantiation.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiParser.ParseToTrack(System.Byte[])">
+            <summary>Parses a byte array into a track's worth of events.</summary>
+            <param name="data">The data to be parsed.</param>
+            <returns>The track containing the parsed events.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiParser.ParseMetaEvent(System.Int64,System.Byte,System.Byte[],System.Int64@)">
+            <summary>Parse a meta MIDI event from the data stream.</summary>
+            <param name="deltaTime">The previously parsed delta-time for this event.</param>
+            <param name="eventType">The previously parsed type of message we're expecting to find.</param>
+            <param name="data">The data stream from which to read the event information.</param>
+            <param name="pos">The position of the start of the event information.</param>
+            <returns>The parsed meta MIDI event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiParser.ParseVoiceEvent(System.Int64,System.Byte,System.Byte,System.Byte[],System.Int64@)">
+            <summary>Parse a voice event from the data stream.</summary>
+            <param name="deltaTime">The previously parsed delta-time for this event.</param>
+            <param name="messageType">The previously parsed type of message we're expecting to find.</param>
+            <param name="channel">The previously parsed channel for this message.</param>
+            <param name="data">The data stream from which to read the event information.</param>
+            <param name="pos">The position of the start of the event information.</param>
+            <returns>The parsed voice MIDI event.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiParser.ReadASCIIText(System.Byte[],System.Int64@)">
+            <summary>Reads an ASCII text sequence from the data stream.</summary>
+            <param name="data">The data stream from which to read the text.</param>
+            <param name="pos">The position of the start of the sequence.</param>
+            <returns>The text as a string.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiParser.ReadVariableLength(System.Byte[],System.Int64@)">
+            <summary>Reads a variable-length value from the data stream.</summary>
+            <param name="data">The data to process.</param>
+            <param name="pos">The position at which to start processing.</param>
+            <returns>The value read; pos is updated to reflect the new position.</returns>
+        </member>
+        <member name="T:Toub.Sound.Midi.MidiParser.MidiParserException">
+            <summary>Exception thrown when an error is encountered during the parsing of a MIDI file.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiParser.MidiParserException._position">
+            <summary>Position in the data stream that caused the exception.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiParser.MidiParserException.#ctor">
+            <summary>Initialize the exception.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiParser.MidiParserException.#ctor(System.String)">
+            <summary>Initialize the exception.</summary>
+            <param name="message">The message for the exception.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiParser.MidiParserException.#ctor(System.String,System.Int64)">
+            <summary>Initialize the exception.</summary>
+            <param name="message">The message for the exception.</param>
+            <param name="position">Position in the data stream that caused the exception.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiParser.MidiParserException.#ctor(System.String,System.Exception)">
+            <summary>Initialize the exception.</summary>
+            <param name="message">The message for the exception.</param>
+            <param name="innerException">The exception that caused this exception.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiParser.MidiParserException.#ctor(System.String,System.Exception,System.Int64)">
+            <summary>Initialize the exception.</summary>
+            <param name="message">The message for the exception.</param>
+            <param name="innerException">The exception that caused this exception.</param>
+            <param name="position">Position in the data stream that caused the exception.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiParser.MidiParserException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Initialize the exception.</summary>
+            <param name="info">Serialization information to rebuild this exception.</param>
+            <param name="context">Serialization context used to rebuild this exception.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiParser.MidiParserException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Serialize the exception information.</summary>
+            <param name="info">Serialization information in which to store the exception data.</param>
+            <param name="context">Serialization context in which to store the exception data.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiParser.MidiParserException.Position">
+            <summary>Gets or sets the byte position that caused the exception.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.MidiPlayer">
+            <summary>Plays MIDI files and messages.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiPlayer._handle">
+            <summary>Handle to the open MIDI device.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiPlayer._references">
+            <summary>The number of references to the currently open MIDI device.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiPlayer._midiLock">
+            <summary>Used for synchronization of all MIDI-related operations.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiPlayer.#ctor">
+            <summary>Prevent external instantiation.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiPlayer.OpenMidi">
+            <summary>Open the default MIDI device.</summary>
+            <remarks>This is necessary only when playing individual events.</remarks>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiPlayer.CloseMidi">
+            <summary>Close the default MIDI device.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiPlayer.InternalOpenMidi">
+            <summary>Opens the MIDI device without regard for whether it has already been opened.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiPlayer.InternalCloseMidi">
+            <summary>Closes the MIDI device without regard for the reference count.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiPlayer.Play(Toub.Sound.Midi.MidiSequence)">
+            <summary>Plays the specified MIDI sequence using Media Control Interface (MCI).</summary>
+            <param name="sequence">The MIDI sequence to be played.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiPlayer.Play(Toub.Sound.Midi.MidiTrack,System.Int32)">
+            <summary>Plays an individual MIDI track.</summary>
+            <param name="track">The track to be played.</param>
+            <param name="division">The MIDI division to use for playing the track.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiPlayer.Play(Toub.Sound.Midi.MidiEventCollection,System.Int32)">
+            <summary>Plays a collection of MIDI events.</summary>
+            <param name="events">The events to be played.</param>
+            <param name="division">The division to use for playing the events.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiPlayer.Play(System.String)">
+            <summary>Plays the specified MIDI file using Media Control Interface (MCI).</summary>
+            <param name="path">The MIDI file to be played.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiPlayer.Play(Toub.Sound.Midi.MidiEvent)">
+            <summary>Plays an individual MIDI event.</summary>
+            <param name="ev">The event to be played.</param>
+            <remarks>
+            Only VoiceMidiEvent's are actually sent to the MIDI device.
+            Delta-times are ignored.
+            OpenMidi must be called before calling Play.  CloseMidi should
+            be called once all events have been played to free up the device.
+            </remarks>
+        </member>
+        <member name="T:Toub.Sound.Midi.MidiSequence">
+            <summary>Represents a MIDI sequence containing tracks of MIDI data.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiSequence._format">
+            <summary>The format of the MIDI file (0, 1, or 2).</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiSequence._division">
+            <summary>The meaning of delta-times.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiSequence._tracks">
+            <summary>The tracks in the MIDI sequence.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.#ctor(System.Int32,System.Int32)">
+            <summary>Initialize the MIDI sequence.</summary>
+            <param name="format">
+            The format for the MIDI file (0, 1, or 2).
+            0 - a single multi-channel track
+            1 - one or more simultaneous tracks
+            2 - one or more sequentially independent single-track patterns
+            </param>
+            <param name="division">The meaning of the delta-times in the file.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.SetFormat(System.Int32)">
+            <summary>Sets the format to the given value.</summary>
+            <param name="format">The format to which to set the sequence.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.AddTrack">
+            <summary>Adds a track to the MIDI sequence.</summary>
+            <returns>The new track as added to the sequence.  Modifications made to the track will be reflected.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.AddTrack(Toub.Sound.Midi.MidiTrack)">
+            <summary>Adds a track to the MIDI sequence.</summary>
+            <param name="track">The complete track to be added.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.RemoveTrack(Toub.Sound.Midi.MidiTrack)">
+            <summary>Removes a track that has been adding to the MIDI sequence.</summary>
+            <param name="track">The track to be removed.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.GetTracks">
+            <summary>Gets the tracks that have been added to the sequence.</summary>
+            <returns>An array of all tracks that have been added to the sequence.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.GetEnumerator">
+            <summary>Gets an enumerator for the tracks in the sequence.</summary>
+            <returns>An enumerator for the tracks in the sequence.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.ToString">
+            <summary>Writes the sequence to a string in human-readable form.</summary>
+            <returns>A human-readable representation of the tracks and events in the sequence.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.ToString(System.IO.TextWriter)">
+            <summary>Dumps the MIDI sequence to the writer in human-readable form.</summary>
+            <param name="writer">The writer to which the track should be written.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.Save(System.String)">
+            <summary>Creates a MIDI file at the specified path and writes the sequence to it.</summary>
+            <param name="path">The MIDI file to create and to which the sequence should be written.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.Save(System.IO.Stream)">
+            <summary>Writes the MIDI sequence to the output stream.</summary>
+            <param name="outputStream">The stream to which the MIDI sequence should be written.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.WriteHeader(System.IO.Stream,System.Int32)">
+            <summary>Writes a MIDI file header out to the stream.</summary>
+            <param name="outputStream">The output stream to which the header should be written.</param>
+            <param name="numTracks">The number of tracks that will be a part of this sequence.</param>
+            <remarks>This functionality is automatically performed during a Save.</remarks>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.IsValid(System.String)">
+            <summary>Determines whether a MIDI file is valid.</summary>
+            <param name="path">The path to the MIDI file.</param>
+            <returns>Whether the MIDI file is valid.</returns>
+            <remarks>
+            Note that in order to determine the file's validity, the entire file
+            must be parsed.  This operation should not be used if Import will also
+            be used (rather, catch any exceptions thrown by Import.
+            </remarks>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.Import(System.String)">
+            <summary>Reads a MIDI stream into a new MidiSequence.</summary>
+            <param name="path">The path to the MIDI file to be parsed.</param>
+            <returns>A MidiSequence containing the parsed MIDI data.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.Import(System.IO.Stream)">
+            <summary>Reads a MIDI stream into a new MidiSequence.</summary>
+            <param name="inputStream">The stream containing the MIDI data.</param>
+            <returns>A MidiSequence containing the parsed MIDI data.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.Transpose(Toub.Sound.Midi.MidiSequence,System.Int32)">
+            <summary>Transposes a MIDI sequence up/down the specified number of half-steps.</summary>
+            <param name="sequence">The sequence to be transposed.</param>
+            <param name="steps">The number of steps up(+) or down(-) to transpose the sequence.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.Transpose(Toub.Sound.Midi.MidiSequence,System.Int32,System.Boolean)">
+            <summary>Transposes a MIDI sequence up/down the specified number of half-steps.</summary>
+            <param name="sequence">The sequence to be transposed.</param>
+            <param name="steps">The number of steps up(+) or down(-) to transpose the sequence.</param>
+            <param name="includeDrums">Whether drum tracks should also be transposed.</param>
+            <remarks>If the step value is too large or too small, notes may wrap.</remarks>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.Trim(Toub.Sound.Midi.MidiSequence,System.Int64)">
+            <summary>Trims a MIDI file to a specified length.</summary>
+            <param name="sequence">The sequence to be copied and trimmed.</param>
+            <param name="totalTime">The requested time length of the new MIDI sequence.</param>
+            <returns>A MIDI sequence with only those events that fell before the requested time limit.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.Convert(Toub.Sound.Midi.MidiSequence,System.Int32)">
+            <summary>Converts a MIDI sequence from its current format to the specified format.</summary>
+            <param name="sequence">The sequence to be converted.</param>
+            <param name="format">The format to which we want to convert the sequence.</param>
+            <returns>The converted sequence.</returns>
+            <remarks>
+            This may or may not return the same sequence as passed in.
+            Regardless, the reference passed in should not be used after this call as the old
+            sequence could be unusable if a different reference was returned.
+            </remarks>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiSequence.Convert(Toub.Sound.Midi.MidiSequence,System.Int32,Toub.Sound.Midi.MidiSequence.FormatConversionOptions)">
+            <summary>Converts a MIDI sequence from its current format to the specified format.</summary>
+            <param name="sequence">The sequence to be converted.</param>
+            <param name="format">The format to which we want to convert the sequence.</param>
+            <param name="options">Options used when doing the conversion.</param>
+            <returns>The converted sequence.</returns>
+            <remarks>
+            This may or may not return the same sequence as passed in.
+            Regardless, the reference passed in should not be used after this call as the old
+            sequence could be unusable if a different reference was returned.
+            </remarks>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiSequence.Format">
+            <summary>Gets the format of the sequence.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiSequence.Division">
+            <summary>Gets or sets the division for the sequence.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiSequence.NumberOfTracks">
+            <summary>Gets the number of tracks in the sequence.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiSequence.Item(System.Int32)">
+            <summary>Gets or sets the track at the specified index.</summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.MidiSequence.FormatConversionOptions">
+            <summary>Options used when performing a format conversion.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiSequence.FormatConversionOptions.None">
+            <summary>No special formatting.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiSequence.FormatConversionOptions.CopyTrackToChannel">
+            <summary>
+            Uses the number of the track as the channel for all events on that track.
+            Only valid if the number of the track is a valid track number.
+            </summary>
+        </member>
+        <member name="T:Toub.Sound.Midi.MidiTrack">
+            <summary>Represents a single MIDI track in a MIDI file.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiTrack._requireEndOfTrack">
+            <summary>Whether the track can be written without an end of track marker.</summary>
+        </member>
+        <member name="F:Toub.Sound.Midi.MidiTrack._events">
+            <summary>Collection of MIDI event added to this track.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiTrack.#ctor">
+            <summary>Initialize the track.</summary>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiTrack.Write(System.IO.Stream)">
+            <summary>Write the track to the output stream.</summary>
+            <param name="outputStream">The output stream to which the track should be written.</param>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiTrack.ToString">
+            <summary>Writes the track to a string in human-readable form.</summary>
+            <returns>A human-readable representation of the events in the track.</returns>
+        </member>
+        <member name="M:Toub.Sound.Midi.MidiTrack.ToString(System.IO.TextWriter)">
+            <summary>Dumps the MIDI track to the writer in human-readable form.</summary>
+            <param name="writer">The writer to which the track should be written.</param>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiTrack.HasEndOfTrack">
+            <summary>Gets whether an end of track event has been added.</summary>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiTrack.RequireEndOfTrack">
+            <summary>Gets or sets whether an end of track marker is required for writing out the entire track.</summary>
+            <remarks>
+            Note that MIDI files require an end of track marker at the end of every track.  
+            Setting this to false could have negative consequences.
+            </remarks>
+        </member>
+        <member name="P:Toub.Sound.Midi.MidiTrack.Events">
+            <summary>Gets the collection of MIDI events that are a part of this track.</summary>
+        </member>
+    </members>
+</doc>

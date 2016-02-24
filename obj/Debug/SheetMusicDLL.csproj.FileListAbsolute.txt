@@ -1,4 +1,0 @@
-D:\private\MidiSheetMusic-2.6-win-src\bin\Debug\SheetMusic.dll
-D:\private\MidiSheetMusic-2.6-win-src\bin\Debug\SheetMusic.pdb
-D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\SheetMusic.dll
-D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\SheetMusic.pdb
