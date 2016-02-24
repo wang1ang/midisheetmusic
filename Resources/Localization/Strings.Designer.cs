@@ -268,6 +268,15 @@ namespace MidiSheetMusic.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        internal static string newMenu {
+            get {
+                return ResourceManager.GetString("newMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
         internal static string none {
@@ -732,6 +741,15 @@ namespace MidiSheetMusic.Resources.Localization {
         internal static string volume {
             get {
                 return ResourceManager.GetString("volume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Write.
+        /// </summary>
+        internal static string writeMenu {
+            get {
+                return ResourceManager.GetString("writeMenu", resourceCulture);
             }
         }
         

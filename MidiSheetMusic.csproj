@@ -12,7 +12,7 @@
     <AssemblyName>MidiSheetMusic</AssemblyName>
     <StartupObject>MidiSheetMusic.MidiSheetMusic</StartupObject>
     <ApplicationIcon>Resources/Images/NotePair.ico</ApplicationIcon>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -62,6 +62,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Toub.Sound.Midi">
+      <HintPath>.\Toub.Sound.Midi.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\AccidSymbol.cs" />
