@@ -1,0 +1,4 @@
+D:\private\MidiSheetMusic-2.6-win-src\bin\Debug\UnitTest.dll
+D:\private\MidiSheetMusic-2.6-win-src\bin\Debug\UnitTest.pdb
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\UnitTest.dll
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\UnitTest.pdb

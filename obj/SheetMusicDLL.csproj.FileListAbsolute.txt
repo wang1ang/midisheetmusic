@@ -1,0 +1,15 @@
+D:\private\MidiSheetMusic-2.6-win-src\bin\Debug\SheetMusic.dll
+D:\private\MidiSheetMusic-2.6-win-src\bin\Debug\SheetMusic.pdb
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\ResolveAssemblyReference.cache
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\MidiSheetMusic.Resources.Images.bass.png
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\MidiSheetMusic.Resources.Images.eight.png
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\MidiSheetMusic.Resources.Images.four.png
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\MidiSheetMusic.Resources.Images.nine.png
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\MidiSheetMusic.Resources.Images.NotePair.png
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\MidiSheetMusic.Resources.Images.six.png
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\MidiSheetMusic.Resources.Images.three.png
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\MidiSheetMusic.Resources.Images.treble.png
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\MidiSheetMusic.Resources.Images.twelve.png
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\MidiSheetMusic.Resources.Images.two.png
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\SheetMusic.dll
+D:\private\MidiSheetMusic-2.6-win-src\obj\Debug\SheetMusic.pdb
