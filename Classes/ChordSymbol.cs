@@ -1169,10 +1169,12 @@ namespace MidiSheetMusic
 
         public void Play()
         {
+            Toub.Sound.Midi.MidiPlayer.OpenMidi();
             foreach (NoteData note in notedata)
             {
                 Toub.Sound.Midi.MidiPlayer.Play(new Toub.Sound.Midi.NoteOn(EndTime - starttime, (byte)0, (byte)note.number, (byte)60));
             }
+            Toub.Sound.Midi.MidiPlayer.CloseMidi();
         }
 
         public override string ToString()

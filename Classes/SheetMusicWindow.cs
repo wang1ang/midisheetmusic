@@ -624,13 +624,15 @@ namespace MidiSheetMusic
 
         void piano_MouseDown(object sender, MouseEventArgs e)
         {
-            piano.OnClick(sender, e);
+            if (player.playstate == 1 || player.playstate == 3)
+                piano.OnClick(sender, e);
         }
 
         void sheetmusic_MouseDown(object sender, MouseEventArgs e)
         {
             // yangwa
-            sheetmusic.OnClick(sender, e);
+            if (player.playstate == 1 || player.playstate == 3)
+                sheetmusic.OnClick(sender, e);
             /*
             Point p = sheetmusic.PointToScreen(new Point(e.X, e.Y));
             Graphics g = CreateGraphics();

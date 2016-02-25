@@ -64,12 +64,12 @@ public class MidiPlayer : Panel  {
     private TrackBar volumeBar;  /** The trackbar for controlling the volume */
     private ToolTip playTip;     /** The tooltip for the play button */
 
-    int playstate;               /** The playing state of the Midi Player */
-    const int stopped   = 1;     /** Currently stopped */
-    const int playing   = 2;     /** Currently playing music */
-    const int paused    = 3;     /** Currently paused */
-    const int initStop  = 4;     /** Transitioning from playing to stop */
-    const int initPause = 5;     /** Transitioning from playing to pause */
+    public int playstate;               /** The playing state of the Midi Player */
+    public const int stopped = 1;     /** Currently stopped */
+    public const int playing = 2;     /** Currently playing music */
+    public const int paused = 3;     /** Currently paused */
+    public const int initStop = 4;     /** Transitioning from playing to stop */
+    public const int initPause = 5;     /** Transitioning from playing to pause */
 
     MidiFile midifile;          /** The midi file to play */
     MidiOptions options;   /** The sound options for playing the midi file */
@@ -387,6 +387,7 @@ public class MidiPlayer : Panel  {
      *  for playing the music.
      */
     private void PlaySoundWindows(string filename) {
+        Toub.Sound.Midi.MidiPlayer.CloseMidi();
         string cmd = "open \"sequencer!" + filename + "\" alias midisheet";
         int ret = mciSendString(cmd, "", 0, 0);
         // mciGetErrorString(ret, errormsg, 256);
@@ -408,6 +409,7 @@ public class MidiPlayer : Panel  {
         // mciGetErrorString(ret, errormsg, 256);
         ret = mciSendString("close midisheet", "", 0, 0);
         // mciGetErrorString(ret, errormsg, 256);
+        Toub.Sound.Midi.MidiPlayer.OpenMidi();
     }
 
     /** Stop playing the music on Linux */
@@ -613,6 +615,13 @@ public class MidiPlayer : Panel  {
         if (midifile == null || sheet == null) {
             return;
         }
+        int prevPlaystate = playstate;
+        if (playstate == playing)
+        {
+            //PlayPause(null, null);
+            Stop(null, null);
+            //System.Threading.Thread.Sleep(3000);
+        }
         if (playstate != paused && playstate != stopped) {
             return;
         }
@@ -629,6 +638,8 @@ public class MidiPlayer : Panel  {
         }
         sheet.ShadeNotes((int)currentPulseTime, (int)prevPulseTime, false);
         piano.ShadeNotes((int)currentPulseTime, (int)prevPulseTime);
+        if (prevPlaystate == playing)
+            PlayPause(null, null); // recover
     }
 
 

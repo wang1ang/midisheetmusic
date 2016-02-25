@@ -568,6 +568,7 @@ namespace MidiSheetMusic
         }
         public void OnClick(object sender, MouseEventArgs e)
         { // wang1ang
+
             if (graphics == null)
             {
                 graphics = CreateGraphics();
