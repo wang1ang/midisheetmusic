@@ -78,6 +78,7 @@
     <Compile Include="Classes\InstrumentDialog.cs" />
     <Compile Include="Classes\KeySignature.cs" />
     <Compile Include="Classes\LyricSymbol.cs" />
+    <Compile Include="Classes\MidiChords.cs" />
     <Compile Include="Classes\MidiEvent.cs" />
     <Compile Include="Classes\MidiFile.cs" />
     <Compile Include="Classes\MidiFileException.cs" />
