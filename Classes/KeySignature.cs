@@ -61,8 +61,8 @@ public class KeySignature {
     private static Accid[][] sharpkeys;
     private static Accid[][] flatkeys;
 
-    private int num_flats;   /** The number of sharps in the key, 0 thru 6 */
-    private int num_sharps;  /** The number of flats in the key, 0 thru 6 */
+    public int num_flats;   /** The number of sharps in the key, 0 thru 6 */
+    public int num_sharps;  /** The number of flats in the key, 0 thru 6 */
 
     /** The accidental symbols that denote this key, in a treble clef */
     private AccidSymbol[] treble;

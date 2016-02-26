@@ -6,7 +6,7 @@
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4617E422-CE13-41B9-A542-5DAF12203E08}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MidiSheetMusic</RootNamespace>
     <AssemblyName>SheetMusic</AssemblyName>
@@ -52,12 +52,16 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Toub.Sound.Midi, Version=2.0.3.0, Culture=neutral, PublicKeyToken=9510c3608a1f0024, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\AccidSymbol.cs" />
@@ -69,6 +73,7 @@
     <Compile Include="Classes\ConfigINI.cs" />
     <Compile Include="Classes\KeySignature.cs" />
     <Compile Include="Classes\LyricSymbol.cs" />
+    <Compile Include="Classes\MidiChords.cs" />
     <Compile Include="Classes\MidiEvent.cs" />
     <Compile Include="Classes\MidiFile.cs" />
     <Compile Include="Classes\MidiFileException.cs" />

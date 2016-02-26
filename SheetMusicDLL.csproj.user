@@ -10,4 +10,8 @@
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartArguments>songs\Bach__Musette_in_D_major.mid</StartArguments>
+    <StartWorkingDirectory>..\..\</StartWorkingDirectory>
+  </PropertyGroup>
 </Project>

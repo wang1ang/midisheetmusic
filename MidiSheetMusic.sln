@@ -5,6 +5,10 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidiSheetMusic", "MidiSheetMusic.csproj", "{0B5CBA19-8987-4EBE-8D7F-4683FCAA5A2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestDLL", "UnitTestDLL.csproj", "{896C2AA4-F275-4514-878F-DF43351735B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SheetMusicDLL", "SheetMusicDLL.csproj", "{4617E422-CE13-41B9-A542-5DAF12203E08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{0B5CBA19-8987-4EBE-8D7F-4683FCAA5A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B5CBA19-8987-4EBE-8D7F-4683FCAA5A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B5CBA19-8987-4EBE-8D7F-4683FCAA5A2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{896C2AA4-F275-4514-878F-DF43351735B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{896C2AA4-F275-4514-878F-DF43351735B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{896C2AA4-F275-4514-878F-DF43351735B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{896C2AA4-F275-4514-878F-DF43351735B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4617E422-CE13-41B9-A542-5DAF12203E08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4617E422-CE13-41B9-A542-5DAF12203E08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4617E422-CE13-41B9-A542-5DAF12203E08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4617E422-CE13-41B9-A542-5DAF12203E08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -59,6 +59,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="nunit.framework.dll" />
+    <Reference Include="Toub.Sound.Midi, Version=2.0.3.0, Culture=neutral, PublicKeyToken=9510c3608a1f0024, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\AccidSymbol.cs" />
